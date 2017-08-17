@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :get_easyauth_id, except: [:new]
+  before_action :get_easyauth_id, except: [:new, :create]
 
   # GET /users
   # GET /users.json
