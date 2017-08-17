@@ -96,10 +96,10 @@ class UsersController < ApplicationController
                        URI(parsed_response[:certificate][:user]).path.split('/').last.to_i
                      end
       @authenticated_as = User.where(easyauth_uid: @easyauth_id).first if User.where(easyauth_uid: @easyauth_id).any?
+      session[:easyauth_id] = @easyauth_id
       redirect_to '/users/new' and return unless @authenticated_id
       session[:authenticated] = true
       session[:name] = @authenticated_as[:name]
-      session[:easyauth_id] = @easyauth_id
     end
 
     def call_easyauth(uri, parameters)
