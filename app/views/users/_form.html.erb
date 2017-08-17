@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :easyauth_uid %>
-    <%= form.number_field :easyauth_uid, id: :user_easyauth_uid %>
+    <%= form.number_field :easyauth_uid, session[:easyauth_id], id: :user_easyauth_uid, readonly: true %>
   </div>
 
   <div class="actions">

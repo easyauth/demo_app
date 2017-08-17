@@ -26,6 +26,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
+    @user.easyauth_uid = session[:easyauth_id]
 
     respond_to do |format|
       if @user.save
@@ -94,7 +95,11 @@ class UsersController < ApplicationController
                        parsed_response = JSON.parse(response.body, symbolize_names: true)
                        URI(parsed_response[:certificate][:user]).path.split('/').last.to_i
                      end
-      puts @easyauth_id
+      @authenticated_as = User.where(easyauth_uid: @easyauth_id).first if User.where(easyauth_uid: @easyauth_id).any?
+      redirect_to '/users/new' and return unless @authenticated_id
+      session[:authenticated] = true
+      session[:name] = @authenticated_as[:name]
+      session[:easyauth_id] = @easyauth_id
     end
 
     def call_easyauth(uri, parameters)
