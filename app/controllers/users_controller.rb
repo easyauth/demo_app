@@ -90,7 +90,7 @@ class UsersController < ApplicationController
                          nonce: nonce,
                          hmac: mac
                        })
-                       parsed_response = JSON.parse(@response.body)
+                       parsed_response = JSON.parse(response.body)
                        URI(parsed_response[:certificate][:user]).path.split('/').last.to_i
                      end
       puts @easyauth_id
