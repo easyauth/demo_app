@@ -81,11 +81,12 @@ class UsersController < ApplicationController
                        require 'securerandom'
                        require 'uri'
                        require 'json'
+                       serial = request.headers["X-Easyauth-Serial"].to_i(16)
                        key = '2d2403a8d60f333ce84a708984a0cd30f231ab03903acc60e7ad8b7554cb153ec9f2218d3c206e5ad217e5c7218c0dcc'
                        nonce = SecureRandom.random_number(2**10)
-                       data = nonce.to_s + request.headers["X-Easyauth-Serial"]
+                       data = nonce.to_s + serial.to_s
                        mac = OpenSSL::HMAC.hexdigest("SHA256", key, data)
-                       response = call_easyauth("http://easyauth.org/api/certificates/#{request.headers["X-Easyauth-Serial"]}",{ 
+                       response = call_easyauth("http://easyauth.org/api/certificates/#{serial}",{ 
                          apikey: '320ece24b1ca866ad9ba65e6e6224b2a730a7ad95ad07c6b1e9ddab64aea05a8e2295361ad8ae66fb79d3ac970c21f2b',
                          nonce: nonce,
                          hmac: mac
