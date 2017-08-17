@@ -97,7 +97,7 @@ class UsersController < ApplicationController
                      end
       @authenticated_as = User.where(easyauth_uid: @easyauth_id).first if User.where(easyauth_uid: @easyauth_id).any?
       session[:easyauth_id] = @easyauth_id
-      redirect_to '/users/new' and return unless @authenticated_id
+      redirect_to '/users/new' and return unless @authenticated_as
       session[:authenticated] = true
       session[:name] = @authenticated_as[:name]
     end
