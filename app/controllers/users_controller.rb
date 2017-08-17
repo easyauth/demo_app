@@ -99,7 +99,7 @@ class UsersController < ApplicationController
       session[:easyauth_id] = @easyauth_id
       redirect_to '/users/new' and return unless @authenticated_as
       session[:authenticated] = true
-      session[:name] = @authenticated_as[:name]
+      session[:name] = @authenticated_as[:username]
     end
 
     def call_easyauth(uri, parameters)
